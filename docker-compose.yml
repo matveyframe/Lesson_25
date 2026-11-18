@@ -1,0 +1,37 @@
+services:
+
+  postgres:
+    image: postgres:18
+    container_name: PostgresDB
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+
+  app:
+    image: golang:1.24-alpine
+    container_name: app
+    working_dir: /app
+    command: sh -c "go mod tidy && go run ."
+    env_file: .env
+    volumes:
+      - ./:/app
+      - gomod:/go/pkg/mod
+    ports:
+      - "${APP_PORT}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+
+volumes:
+  pgdata:
+  gomod:
