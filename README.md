@@ -41,7 +41,7 @@ volumes:
 ```
 
 
-![]( "Logo Title Text 1")
+![](https://github.com/matveyframe/Lesson_25/blob/main/task1_result%20(25).PNG "Logo Title Text 1")
 
 2) Написать скрипт на python, который через модуль subprocess проверяет, запущены ли контейнеры приложения
 
@@ -60,7 +60,7 @@ for name in containers:
         print(name, "Containers not running")
 ```
 
-![]( "Logo Title Text 1")
+![](https://github.com/matveyframe/Lesson_25/blob/main/task2_result%20(25).PNG "Logo Title Text 1")
 
 
 
